@@ -1,5 +1,5 @@
 ---
-title: "Hard References"
+title: "What Are Hard References & Reasons to Avoid Them"
 description: "Excessive Hard References grind projects to halt with technical debt, poor load times, and decreased productivity."
 excerpt: "A hard reference is created when an asset is dependent upon another asset. The result is that whenever one asset is loaded..."
 categories:
@@ -96,7 +96,7 @@ This is where interfaces can become quite powerful, the caller of an interface d
 
 **BP_Door** implements an Interact event from **BPI_InteractInterface**. Whenever the player interacts, instead of casting to specific objects, the player just sends out an **Interact** call to the Object (Note, not a specific type) and either something will happen, in this case, **BP_Door** will run **Interact**. Or nothing will happen. With this, we no longer need to create that Cast chain and have a much more extensible system as a result. We avoid creating any hard references to the interactable types themselves, all thanks to our interface. Nice!
 
-# Commandlets 
+## Commandlets 
 
 Blueprints can be difficult for larger teams to manage due to them being binary assets. Unlike native code, reviewing blueprint changes is not as easy as running a diff tool directly from a changelist. To diff blueprints, the reviewer needs to be in the editor itself, manually cycling through each blueprint and its many graphs. For this reason, blueprints within a larger team can quickly become out of control.
 

@@ -1,5 +1,5 @@
 ---
-title: "Blueprint Pure... Yes? No? It's Complicated"
+title: "Blueprint Pure Functions: Yes? No? It's Complicated"
 description: "Blueprint Pure functions are widely misused, causing performance loss, unexpected output, and bugs. Learn how to use blueprint pure efficiently."
 excerpt: "To avoid misusing Pure functions, you can follow a simple rule: Never connect an..."
 categories:
