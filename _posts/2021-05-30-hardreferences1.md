@@ -1,7 +1,7 @@
 ---
-title: "What Are Hard References & Reasons to Avoid Them"
-description: "Excessive Hard References grind projects to halt with technical debt, poor load times, and decreased productivity."
-excerpt: "A hard reference is created when an asset is dependent upon another asset. The result is that whenever one asset is loaded..."
+title: What Are Hard References & Reasons to Avoid Them
+description: 'Excessive Hard References grind projects to halt with technical debt, poor load times, and decreased productivity.'
+excerpt: A hard reference is created when an asset is dependent upon another asset. The result is that whenever one asset is loaded...
 categories:
   - Unreal
 tags:
@@ -10,6 +10,8 @@ tags:
   - Soft References
   - Hard References
   - Asset Management
+slug: hard-references-reasons-avoid
+lastmod: '2022-06-02T12:07:31.628Z'
 ---
 
 A hard reference is created when an asset is dependent upon another asset. The result is that whenever one asset is loaded, all assets it is dependent upon are also loaded into memory.
