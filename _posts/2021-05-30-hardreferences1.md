@@ -1,6 +1,7 @@
 ---
 title: "Hard References"
-excerpt: "Excessive Hard References can grind projects to a halt with technical debt, poor load times, and decreased productivity. Learn how to identify and solve hard references in your project"
+description: "Excessive Hard References grind projects to halt with technical debt, poor load times, and decreased productivity."
+excerpt: "A hard reference is created when an asset is dependent upon another asset. The result is that whenever one asset is loaded..."
 categories:
   - Unreal
 tags:
@@ -15,7 +16,7 @@ A hard reference is created when an asset is dependent upon another asset. The r
 
 A simple example below demonstrates this using a blueprint that depends upon a static mesh. The dependency comes from the static mesh being referenced by the StaticMeshComponent in the blueprint’s hierarchy. If you’re interested in looking at this view in one of your projects, you can right-click on any asset in the content browser and hit **Reference Viewer** to view its hard references.
 
-[![RefernceViewer]({{ site.url }}{{ site.baseurl }}/assets/images/referenceviewer1.png)]({{ site.url }}{{ site.baseurl }}/assets/images/referenceviewer1.png)
+[![ReferenceViewer]({{ site.url }}{{ site.baseurl }}/assets/images/referenceviewer1.png)]({{ site.url }}{{ site.baseurl }}/assets/images/referenceviewer1.png)
 
 
 Many other cases create a hard reference to another asset:
@@ -29,7 +30,7 @@ Many other cases create a hard reference to another asset:
 
 [![RefernceViewer]({{ site.url }}{{ site.baseurl }}/assets/images/hardreferencenodes.png)]({{ site.url }}{{ site.baseurl }}/assets/images/hardreferencenodes.png)
 
-## Why are Hard References bad?
+# Why Are Hard References Bad?
 
 Hard references create a dependency where if asset A is loaded, anything it depends on is also loaded, and then assets those assets depend on are also loaded, and again, and again until everything required for the original asset is loaded into memory. 
 
@@ -45,7 +46,13 @@ The object's Size Map is accessed by right-clicking on an asset and hitting Size
 
 Letting hard references fester in a project is likely to cause technical debt and challenges further down the line, as systems will have to be refactored to solve the underlying problems and dependencies between assets.
 
-## Avoiding Hard References
+## Size Map / Reference Viewer
+
+Use the Size Map and Reference Viewer tools to help you identify and debug high dependency counts
+
+[![RefernceViewer]({{ site.url }}{{ site.baseurl }}/assets/images/referenceviewer3.png)]({{ site.url }}{{ site.baseurl }}/assets/images/referenceviewer3.png)
+
+# Avoiding Hard References
 
 How you approach removing hard references depends heavily upon the context of what the hard reference is being caused by, and why it might be necessary in the first place. Here are a few solutions you can deploy when you are dealing with hard references:
 
@@ -77,12 +84,6 @@ A use case example... You have a **BP_Bridge** in your game with a static mesh t
 
 [![RefernceViewer]({{ site.url }}{{ site.baseurl }}/assets/images/softref3.png)]({{ site.url }}{{ site.baseurl }}/assets/images/softref3.png)
 
-## Size Map / Reference Viewer
-
-Use the Size Map and Reference Viewer tools to help you identify and debug high dependency counts
-
-[![RefernceViewer]({{ site.url }}{{ site.baseurl }}/assets/images/referenceviewer3.png)]({{ site.url }}{{ site.baseurl }}/assets/images/referenceviewer3.png)
-
 ## Interfaces
 
 Interfaces allow you to avoid hard references, *as long as the interface itself does not have a hard reference to another uasset type as part of any function parameters or return values*. You can think of interfaces in UE4 as assets themselves with a reference tree and size map. You can make interface calls on an object without needing to know its specific type (*_class*). 
@@ -95,7 +96,7 @@ This is where interfaces can become quite powerful, the caller of an interface d
 
 **BP_Door** implements an Interact event from **BPI_InteractInterface**. Whenever the player interacts, instead of casting to specific objects, the player just sends out an **Interact** call to the Object (Note, not a specific type) and either something will happen, in this case, **BP_Door** will run **Interact**. Or nothing will happen. With this, we no longer need to create that Cast chain and have a much more extensible system as a result. We avoid creating any hard references to the interactable types themselves, all thanks to our interface. Nice!
 
-## Commandlets 
+# Commandlets 
 
 Blueprints can be difficult for larger teams to manage due to them being binary assets. Unlike native code, reviewing blueprint changes is not as easy as running a diff tool directly from a changelist. To diff blueprints, the reviewer needs to be in the editor itself, manually cycling through each blueprint and its many graphs. For this reason, blueprints within a larger team can quickly become out of control.
 

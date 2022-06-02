@@ -1,15 +1,17 @@
 ---
 title: "Blueprint Pure... Yes? No? It's Complicated"
-excerpt: "Blueprint Pure functions can be easily misused, causing unnecessary performance loss and unexpected output, learn how to safely use blueprint pure in your unreal projects"
+description: "Blueprint Pure functions are widely misused, causing performance loss, unexpected output, and bugs. Learn how to use blueprint pure efficiently."
+excerpt: "To avoid misusing Pure functions, you can follow a simple rule: Never connect an..."
 categories:
   - Unreal
 tags:
   - Unreal Engine
   - Blueprint Pure
 ---
-## Creating a Pure Function Node
 
-You can create a pure function in Unreal Engine by ticking the **“Pure”** tickbox in the details panel of a blueprint function. Alternatively, in C++ - you can set a function as `const` or `BlueprintPure` (both will give the same Pure style node in blueprint).
+# Blueprint Pure Functions
+
+You can create a pure function in Unreal Engine by ticking the **“Pure”** tick box in the details panel of a blueprint function. Alternatively, in C++ - you can set a function as `const` or `BlueprintPure` (both will give the same Pure style node in blueprint).
 
     UPROPERTY(BlueprintCallable)
     float GetHealth() const { return Health; }
@@ -40,7 +42,7 @@ If you have a pure node that is expensive and you need the result to output to v
 The node **GetAllActorsOfClass** is a classic example of Epic Games intentionally choosing to keep a node impure to prevent bad misuse by inexperienced unreal developers.
 
 
-## Macro Complications
+# Macro Complications
 
 Remember that simple rule from earlier? "***Never connect a pure function to more than 1 impure node.***" There is an exception to this rule... Macros such as this **ForEachLoop** below may look like an innocent impure node. You may expect the pure **GetComponentsByClass** node to be called once whilst the **ForEachLoop** iterates over its result - but that is not the case. **GetComponentsByClass** will be called again **twice** on each iteration of the loop due to the way this macro (and potentially others) are set up. 
 
