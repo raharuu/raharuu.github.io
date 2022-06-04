@@ -1,6 +1,7 @@
 ---
-title: "Hard References"
-excerpt: "Excessive Hard References can grind projects to a halt with technical debt, poor load times, and decreased productivity. Learn how to identify and solve hard references in your project"
+title: What Are Hard References & Reasons to Avoid Them
+description: 'Excessive Hard References grind projects to halt with technical debt, poor load times, and decreased productivity.'
+excerpt: A hard reference is created when an asset is dependent upon another asset. The result is that whenever one asset is loaded...
 categories:
   - Unreal
 tags:
@@ -9,13 +10,15 @@ tags:
   - Soft References
   - Hard References
   - Asset Management
+slug: hard-references-reasons-avoid
+lastmod: '2022-06-02T12:07:31.628Z'
 ---
 
 A hard reference is created when an asset is dependent upon another asset. The result is that whenever one asset is loaded, all assets it is dependent upon are also loaded into memory.
 
 A simple example below demonstrates this using a blueprint that depends upon a static mesh. The dependency comes from the static mesh being referenced by the StaticMeshComponent in the blueprint’s hierarchy. If you’re interested in looking at this view in one of your projects, you can right-click on any asset in the content browser and hit **Reference Viewer** to view its hard references.
 
-[![RefernceViewer]({{ site.url }}{{ site.baseurl }}/assets/images/referenceviewer1.png)]({{ site.url }}{{ site.baseurl }}/assets/images/referenceviewer1.png)
+[![ReferenceViewer]({{ site.url }}{{ site.baseurl }}/assets/images/referenceviewer1.png)]({{ site.url }}{{ site.baseurl }}/assets/images/referenceviewer1.png)
 
 
 Many other cases create a hard reference to another asset:
@@ -29,7 +32,7 @@ Many other cases create a hard reference to another asset:
 
 [![RefernceViewer]({{ site.url }}{{ site.baseurl }}/assets/images/hardreferencenodes.png)]({{ site.url }}{{ site.baseurl }}/assets/images/hardreferencenodes.png)
 
-## Why are Hard References bad?
+# Why Are Hard References Bad?
 
 Hard references create a dependency where if asset A is loaded, anything it depends on is also loaded, and then assets those assets depend on are also loaded, and again, and again until everything required for the original asset is loaded into memory. 
 
@@ -45,7 +48,13 @@ The object's Size Map is accessed by right-clicking on an asset and hitting Size
 
 Letting hard references fester in a project is likely to cause technical debt and challenges further down the line, as systems will have to be refactored to solve the underlying problems and dependencies between assets.
 
-## Avoiding Hard References
+## Size Map / Reference Viewer
+
+Use the Size Map and Reference Viewer tools to help you identify and debug high dependency counts
+
+[![RefernceViewer]({{ site.url }}{{ site.baseurl }}/assets/images/referenceviewer3.png)]({{ site.url }}{{ site.baseurl }}/assets/images/referenceviewer3.png)
+
+# Avoiding Hard References
 
 How you approach removing hard references depends heavily upon the context of what the hard reference is being caused by, and why it might be necessary in the first place. Here are a few solutions you can deploy when you are dealing with hard references:
 
@@ -76,12 +85,6 @@ You can load a soft reference using these nodes: **Async Load Asset** (For objec
 A use case example... You have a **BP_Bridge** in your game with a static mesh that has materials and textures. You want to give the player the ability to select between numerous static meshes and materials to add customisability to the object. If you decided to use Hard References to achieve this feature by creating an array of StaticMesh and Texture2D, it would result in all possible variants being loaded into memory permanently whenever **BP_Bridge** is loaded, and with a not so happy reference viewer. A better approach is to use soft references instead, to load in the desired variants/assets as the player updates their selection as seen below.
 
 [![RefernceViewer]({{ site.url }}{{ site.baseurl }}/assets/images/softref3.png)]({{ site.url }}{{ site.baseurl }}/assets/images/softref3.png)
-
-## Size Map / Reference Viewer
-
-Use the Size Map and Reference Viewer tools to help you identify and debug high dependency counts
-
-[![RefernceViewer]({{ site.url }}{{ site.baseurl }}/assets/images/referenceviewer3.png)]({{ site.url }}{{ site.baseurl }}/assets/images/referenceviewer3.png)
 
 ## Interfaces
 
