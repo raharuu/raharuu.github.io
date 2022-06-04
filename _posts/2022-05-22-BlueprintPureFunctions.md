@@ -24,7 +24,7 @@ A pure blueprint node removes the need to explicitly execute a function via the 
 
 ## Misuses of Pure Functions
 
-Pure nodes despite being quite convenient a lot of the time, are quite easy to misuse because they do not cache their result. To avoid misusing Pure functions, you can follow a simple rule: ***Never connect an expensive pure function to more than 1 impure node.*** In the 2 images below, I have a simple blueprint pure node that prints “Hello” to the screen, because blueprint pure nodes do not cache their output, the ‘Pure’ event below prints “Hello” to the screen 3 times, despite the node seemingly being reused.
+Pure nodes despite being quite convenient most of the time, are easy to misuse because they do not cache their result. To avoid misusing Pure functions, you can follow a simple rule: ***Never connect an expensive pure function to more than 1 impure node.*** In the 2 images below, I have a simple blueprint pure node that prints “Hello” to the screen, because blueprint pure nodes do not cache their output, the ‘Pure’ event below prints “Hello” to the screen 3 times, despite the node seemingly being reused.
 
 [![SimplePureFunction]({{ site.url }}{{ site.baseurl }}/assets/images/BlueprintPureFunctions/BlueprintPureFunction2.png)]({{ site.url }}{{ site.baseurl }}/assets/images/BlueprintPureFunctions/BlueprintPureFunction2.png)
 
@@ -42,9 +42,9 @@ The node **GetAllActorsOfClass** is a classic example of Epic Games intentionall
 
 ## Macro Complications
 
-Remember that simple rule from earlier? "***Never connect a pure function to more than 1 impure node.***" There is an exception to this rule... Macros such as this **ForEachLoop** below may look like an innocent impure node. You may expect the pure **GetComponentsByClass** node to be called once whilst the **ForEachLoop** iterates over its result - but that is not the case. **GetComponentsByClass** will be called again **twice** on each iteration of the loop due to the way this macro (and potentially others) are set up. 
+Remember that simple rule from earlier? "***Never connect a pure function to more than 1 impure node.***" There is an exception to this rule... Macros such as this **ForEachLoop** below may look like an innocent impure node. You may expect the pure **GetComponentsByClass** node to be called once whilst the **ForEachLoop** iterates over its result - but that is not the case. **GetComponentsByClass** will be called again **twice** on each iteration of the loop due to the way this macro (and potentially others) are set up.
 
-If you peek inside of the **ForEachLoop** macro, you'll see that 2 other nodes (*Length* and *Get*) are querying it **each** iteration. An extreme example of how this can be problematic not just for performance, but for unexpected output and even crashes... the blueprint below will result in an infinite loop because **GetComponentsByClass** is called on each iteration of the loop, yet is increasing in size in every iteration as well because we are constructing a fresh component on each iteration. In this case, always cache the value first as both a safety precaution and because the **GetComponentsByClass** is an expensive operation you shouldn’t be unnecessarily repeating anyway.
+If you peek inside of the **ForEachLoop** macro, you'll see that 2 other nodes (*Length* and *Get*) are querying it **each** iteration. An extreme example of how this can be problematic not just for performance, but for unexpected output and even crashes... the blueprint below will result in an infinite loop because **GetComponentsByClass** is called on each iteration of the loop, yet is increasing in size in every iteration as well because we are constructing a fresh component on each iteration. In this case, cache the value first as both a safety precaution and because the **GetComponentsByClass** is an expensive operation you shouldn’t be unnecessarily repeating anyway.
 
 [![ForEachGotchas]({{ site.url }}{{ site.baseurl }}/assets/images/BlueprintPureFunctions/BlueprintPureFunction6.png)]({{ site.url }}{{ site.baseurl }}/assets/images/BlueprintPureFunctions/BlueprintPureFunction6.png)
 
@@ -66,7 +66,7 @@ Another common misuse I see with **ForEachLoop** is when someone wants to **Dest
     14. A component is deleted
     15. Index is incremented (4 -> 5)
     16. GetComponentByClass returns 5 components (once)
-    17. The current index (5) is no longer less than the 5 components returned, so the loop terminates
+    17. The current index (5) is no longer less than (<) the 5 components returned, so the loop finishes
 
 ## Conclusion
 
@@ -75,5 +75,5 @@ To summarise, be cautious of how you connect your pure nodes to impure nodes (es
 Thanks for reading!
 
 ## Further Reading
-[Unreal Engine Official Function Documentation](https://docs.unrealengine.com/4.27/en-US/ProgrammingAndScripting/Blueprints/UserGuide/Functions/#purevs.impure)
 
+[Unreal Engine Official Function Documentation](https://docs.unrealengine.com/4.27/en-US/ProgrammingAndScripting/Blueprints/UserGuide/Functions/#purevs.impure)
