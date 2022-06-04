@@ -10,8 +10,6 @@ tags:
 slug: blueprint-pure-functions-complicated
 ---
 
-# Blueprint Pure Functions
-
 You can create a pure function in Unreal Engine by ticking the **“Pure”** tick box in the details panel of a blueprint function. Alternatively, in C++ - you can set a function as `const` or `BlueprintPure` (both will give the same Pure style node in blueprint).
 
     UPROPERTY(BlueprintCallable)
@@ -42,8 +40,7 @@ If you have a pure node that is expensive and you need the result to output to v
 
 The node **GetAllActorsOfClass** is a classic example of Epic Games intentionally choosing to keep a node impure to prevent bad misuse by inexperienced unreal developers.
 
-
-# Macro Complications
+## Macro Complications
 
 Remember that simple rule from earlier? "***Never connect a pure function to more than 1 impure node.***" There is an exception to this rule... Macros such as this **ForEachLoop** below may look like an innocent impure node. You may expect the pure **GetComponentsByClass** node to be called once whilst the **ForEachLoop** iterates over its result - but that is not the case. **GetComponentsByClass** will be called again **twice** on each iteration of the loop due to the way this macro (and potentially others) are set up. 
 
@@ -77,6 +74,6 @@ To summarise, be cautious of how you connect your pure nodes to impure nodes (es
 
 Thanks for reading!
 
-# Further Reading
+## Further Reading
 [Unreal Engine Official Function Documentation](https://docs.unrealengine.com/4.27/en-US/ProgrammingAndScripting/Blueprints/UserGuide/Functions/#purevs.impure)
 
