@@ -1,5 +1,5 @@
 ---
-title: What Are Hard References & Reasons to Avoid Them
+title: Hard References & Reasons to Avoid Them
 description: 'Excessive Hard References grind projects to halt with technical debt, poor load times, and decreased productivity.'
 excerpt: A hard reference is created when an asset depends upon another asset. The result is that whenever one asset is loaded...
 categories:
