@@ -6,7 +6,7 @@ categories:
   - Unreal
 tags:
   - Unreal Engine
-  - Blueprint Pure
+  - Blueprints
 slug: blueprint-pure-functions-complicated
 ---
 

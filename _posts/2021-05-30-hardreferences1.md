@@ -6,10 +6,10 @@ categories:
   - Unreal
 tags:
   - Unreal Engine
-  - Best Practices
   - Soft References
   - Hard References
-  - Asset Management
+  - Blueprints
+  - C++
 slug: hard-references-reasons-avoid
 lastmod: '2022-06-02T12:07:31.628Z'
 ---
